@@ -24,11 +24,13 @@ from aiologger import Logger as aioLogger
 from aiologger.formatters.json import ExtendedJsonFormatter
 from aiologger.handlers.streams import AsyncStreamHandler
 from aiologger.loggers.json import JsonLogger as aioJsonLogger
+from aiologger.records import LogRecord as aioLogRecord
 
 from .version import VERSION
 
 __all__ = [
-    'AsyncLoggerAdapter', 'SyncLoggerAdapter', 'JanusLogger',
+    'JanusLogger',
+    'AsyncLoggerAdapter', 'SyncLoggerAdapter', 'AsyncNullHandler',
     'fixture_sync_default', 'fixture_sync_json',
     'fixture_async_default', 'fixture_async_json',
 ]
@@ -55,6 +57,29 @@ class ILoggerAdapter(object):
         else:
             kwargs['extra'] = self.extra
         return msg, kwargs
+
+
+class AsyncNullHandler(logging.NullHandler):
+    '''
+    Async NULL handler - ignore any log record.
+    '''
+    async def close(self) -> None:
+        pass
+
+    def createLock(self) -> None:
+        self.lock = None
+
+    async def emit(self, record: aioLogRecord) -> None:
+        pass
+
+    async def flush(self) -> None:
+        pass
+
+    async def handle(self, record: aioLogRecord) -> bool:  # @UnusedVariable
+        return True
+
+    async def handle_error(self, record: aioLogRecord, exception: Exception) -> None:  # @IgnorePep8
+        pass
 
 
 class AsyncLoggerAdapter(ILoggerAdapter):
