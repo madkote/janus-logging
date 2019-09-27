@@ -9,6 +9,8 @@
 setup
 -----
 Setup script
+
+https://pypi.org/pypi?%3Aaction=list_classifiers
 '''
 
 from __future__ import absolute_import

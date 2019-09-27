@@ -76,3 +76,7 @@ pypy-build: clean test-all pypy-deps
 pypy-upload-test: pypy-deps
 	@echo $@
 	python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+pypy-upload: pypy-deps
+	@echo $@
+	python -m twine upload dist/*
