@@ -1,14 +1,11 @@
 janus-logging
 =============
-.. image:: https://travis-ci.com/madkote/janus.svg?branch=master
-    :target: https://travis-ci.com/madkote/janus
-.. image:: https://codecov.io/gh/madkote/janus/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/madkote/janus
-.. image:: https://img.shields.io/pypi/v/janus.svg
+.. image:: https://travis-ci.com/madkote/janus_logging.svg?branch=master
+    :target: https://travis-ci.com/madkote/janus-logging
+.. image:: https://codecov.io/gh/madkote/janus-logging/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/madkote/janus-logging
+.. image:: https://img.shields.io/pypi/v/janus_logging.svg
     :target: https://pypi.python.org/pypi/janus-logging
-.. image:: https://badges.gitter.im/Join%20Chat.svg
-    :target: https://gitter.im/aio-libs/Lobby
-    :alt: Chat on Gitter
 
 sync and async logging within one logger instance.
 
