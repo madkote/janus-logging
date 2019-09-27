@@ -57,12 +57,12 @@ VERSION = get_version(NAME_PACKAGE)
 DESCRIPTION = 'sync and async logging within one logger instance'
 URL = 'https://github.com/madkote/janus-logging'
 REQUIRES_INSTALL = [
-    'aiologger==0.4.*'
+    'aiologger==0.4.*',
 ]
 REQUIRES_DEV = []
 REQUIRES_TESTS = REQUIRES_DEV + [
     'pytest==5.*',
-    'tox==3.*'
+    'tox==3.*',
 ]
 REQUIRES_EXTRA = {
     'dev':  REQUIRES_DEV,
@@ -79,7 +79,7 @@ setup(
     version=VERSION,
     description=DESCRIPTION,
     author='madkote',
-    author_email='madkote(at)bluewin.ch',
+    author_email=__author__.replace('(at)', '@'),
     url=URL,
     download_url=URL + '/archive/{}.tar.gz'.format(VERSION),
     license='MIT License',
@@ -97,10 +97,10 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Topic :: Utilities',
+        'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: Logging',
-        'Topic :: Logging :: Async',
-        'Topic :: Logging :: Json',
+        'Topic :: System :: Logging',
         'Framework :: AsyncIO',
         'Operating System :: OS Independent',
         'Intended Audience :: Developers',

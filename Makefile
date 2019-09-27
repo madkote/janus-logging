@@ -34,6 +34,7 @@ clean-build:
 	rm --force --recursive build/
 	rm --force --recursive dist/
 	rm --force --recursive *.egg-info
+	rm --force --recursive .pytest_cache/
 
 clean-pycache:
 	@echo $@
@@ -62,4 +63,16 @@ test: test-unit
 
 test-all: test-unit test-tox
 	@echo $@
-	
+
+
+pypy-deps:
+	@echo $@
+	pip install -U twine
+
+pypy-build: clean test-all pypy-deps
+	@echo $@
+	python setup.py sdist bdist_wheel
+
+pypy-upload-test: pypy-deps
+	@echo $@
+	python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
