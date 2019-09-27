@@ -27,8 +27,11 @@ __copyright__ = 'Copyright 2019, madkote'
 if sys.version_info < (3, 6, 0):
     raise RuntimeError("Python 3.6+ required")
 
-with open("README.md", "r") as fh:
+with open("README.rst", "r") as fh:
     long_description = fh.read()
+
+with open("CHANGES.rst", "r") as fh:
+    changes_description = fh.read()
 
 
 def get_version(package_name):
@@ -83,14 +86,14 @@ setup(
     url=URL,
     download_url=URL + '/archive/{}.tar.gz'.format(VERSION),
     license='MIT License',
-    keywords=['Async', 'Logging', 'Json', 'AsyncIO'],
+    keywords=['async', 'logging', 'log', 'json', 'asyncio', 'output'],
     install_requires=REQUIRES_INSTALL,
     tests_require=REQUIRES_TESTS,
     extras_require=REQUIRES_EXTRA,
     packages=PACKAGES,
     python_requires='>=3.6.0',
     include_package_data=True,
-    long_description=long_description,
+    long_description='\n\n'.join((long_description, changes_description)),
     platforms=['any'],
     classifiers=[
         'Programming Language :: Python',
