@@ -193,7 +193,7 @@ class SyncJsonFormatter(logging.Formatter):
             line_numer=record.lineno,
             function=record.funcName,
             level=record.levelname.upper(),
-            msg=record.msg,
+            msg=record.getMessage(),
             file_path=record.pathname
         )
         return self.serializer(details)
