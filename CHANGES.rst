@@ -1,6 +1,12 @@
 Changes
 =======
 
+1.2.0 (2019-10-04)
+------------------
+
+- `Executor` based `AsyncLoggerAdapter` due to issues with `aiologger==0.4.0`
+
+
 1.1.1 (2019-10-01)
 ------------------
 

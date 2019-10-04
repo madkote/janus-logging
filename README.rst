@@ -32,13 +32,13 @@ Default
 
     def threaded(sync_log, counter: int):
         for i in range(counter):
-        sync_log.info('s-Hello #%s' % i)
-        sync_log.info('s-Finished #%s' % counter)
+            sync_log.info('s-Hello #%s' % i)
+            sync_log.info('s-Finished #%s' % counter)
 
     async def async_coro(async_log, counter: int):
         for i in range(counter):
-        await async_log.info('aio-Hello #%s' % i)
-        await async_log.info('aio-Finished #%s' % counter)
+            await async_log.info('aio-Hello #%s' % i)
+            await async_log.info('aio-Finished #%s' % counter)
 
     #
     counter = 4
@@ -131,8 +131,7 @@ Simply use *fixtures*.
         name=name,
         level=level,
         loop=loop,
-        fixture_async=janus_logging.fixture_async_json,
-        fixture_sync=janus_logging.fixture_sync_json,
+        fixture=janus_logging.fixture_json,
         stream=stream,
         extra=dict(bla='blabla')
     )
@@ -171,24 +170,18 @@ If a custom logger, formatter, handler are required, then create custom
 
 .. code:: python
 
-    def fixture_sync_custom(name: str, level: int, **kwargs) -> logging.Logger:
-        ...
-        return ...
-
-
-    def fixture_async_custom(
-            name: str,
-            level: int,
-            loop: asyncio.AbstractEventLoop,
-            **kwargs
-            ) -> aiologger.Logger:
+    def fixture_custom(
+    		name: str,
+    		level: int,
+    		loop: loop: asyncio.AbstractEventLoop,
+    		**kwargs
+    		) -> logging.Logger:
         ...
         return ...
 
     logger = janus_logging.JanusLogger(
         ...,
-        fixture_async=fixture_async_custom,
-        fixture_sync=fixture_sync_custom,
+        fixture=fixture_custom,
         ...
     )
 

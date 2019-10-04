@@ -67,7 +67,7 @@ def fixture_async_default(
     return ...
 
 
-def main():
+def main_TODO():
     counter = 4
     name = 'my_janus_logger'
     level = logging.DEBUG
@@ -80,6 +80,41 @@ def main():
         loop=loop,
         fixture_async=janus_logging.fixture_async_json,
         fixture_sync=janus_logging.fixture_sync_json,
+        stream=stream,
+        extra=dict(bla='blabla')
+    )
+    loop.run_until_complete(
+        asyncio.gather(
+            loop.run_in_executor(
+                None,
+                threaded,
+                logger.logger_sync(logger_name='logger_sync'),
+                counter
+            ),
+            async_coro(
+                logger.logger_async(logger_name='logger_async'),
+                counter
+            )
+        )
+    )
+    logger.shutdown()
+    #
+    #
+    loop.close()
+
+
+def main():
+    counter = 4
+    name = 'my_janus_logger'
+    level = logging.DEBUG
+    stream = sys.stdout
+    loop = asyncio.get_event_loop()
+    #
+    logger = janus_logging.JanusLogger(
+        name=name,
+        level=level,
+        loop=loop,
+        fixture=janus_logging.fixture_json,
         stream=stream,
         extra=dict(bla='blabla')
     )
