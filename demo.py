@@ -78,8 +78,8 @@ def main_TODO():
         name=name,
         level=level,
         loop=loop,
-        fixture_async=janus_logging.fixture_async_json,
-        fixture_sync=janus_logging.fixture_sync_json,
+        fixture_async=janus_logging.fixture_async_json2,
+        fixture_sync=janus_logging.fixture_sync_json2,
         stream=stream,
         extra=dict(bla='blabla')
     )
@@ -139,4 +139,7 @@ def main():
 
 
 if __name__ == '__main__':
+    # import uvloop
+    # uvloop.install()
     main()
+    #main_TODO()

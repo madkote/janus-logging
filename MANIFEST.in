@@ -3,6 +3,7 @@ include CHANGES.rst
 include README.rst
 global-exclude *.pyc
 global-exclude *.pyd
+global-exclude *.pyo
 global-exclude *.so
 global-exclude *.lib
 global-exclude *.dll

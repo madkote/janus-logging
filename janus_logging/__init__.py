@@ -219,7 +219,7 @@ class AsyncLoggerAdapter(ILoggerAdapter):
         return '<%s %s (%s)>' % (self.__class__.__name__, logger.name, level)
 
 
-class AsyncLoggerAdapter_TODO(ILoggerAdapter):
+class AsyncLoggerAdapter2(ILoggerAdapter):
     '''
     Async logger adapter
     '''
@@ -385,7 +385,7 @@ def fixture_json(
     logger.addHandler(hdlr)
     return logger
 
-def fixture_sync_default_TODO(name: str, level: int, **kwargs) -> logging.Logger:  # @IgnorePep8
+def fixture_sync_default2(name: str, level: int, **kwargs) -> logging.Logger:  # @IgnorePep8
     '''
     Default sync logger constructor
     :param name: logger name
@@ -402,7 +402,7 @@ def fixture_sync_default_TODO(name: str, level: int, **kwargs) -> logging.Logger
     return logger
 
 
-def fixture_sync_json_TODO(name: str, level: int, **kwargs) -> logging.Logger:
+def fixture_sync_json2(name: str, level: int, **kwargs) -> logging.Logger:
     '''
     Json sync logger constructor
     :param name: logger name
@@ -423,7 +423,7 @@ def fixture_sync_json_TODO(name: str, level: int, **kwargs) -> logging.Logger:
     return logger
 
 
-def fixture_async_default_TODO(
+def fixture_async_default2(
         name: str,
         level: int,
         loop: asyncio.AbstractEventLoop,
@@ -451,7 +451,7 @@ def fixture_async_default_TODO(
     return logger
 
 
-def fixture_async_json_TODO(
+def fixture_async_json2(
         name: str,
         level: int,
         loop: asyncio.AbstractEventLoop,
@@ -517,13 +517,10 @@ class JanusLogger(object):
         '''
         Shutdown logging
         '''
-        self._loop.run_until_complete(
-            asyncio.gather(
-                # self._log_async.shutdown(),
-                self._loop.run_in_executor(
-                    None,
-                    logging.shutdown,
-                )
+        asyncio.ensure_future(
+            self._loop.run_in_executor(
+                None,
+                logging.shutdown,
             )
         )
 
@@ -546,7 +543,7 @@ class JanusLogger(object):
         return SyncLoggerAdapter(self._log, {**self._extra, **kwargs})
 
 
-class JanusLogger_TODO(object):
+class JanusLogger2(object):
     '''
     Janus logger
     '''
@@ -570,9 +567,9 @@ class JanusLogger_TODO(object):
         if loop is None:
             loop = asyncio.get_event_loop()
         if fixture_async is None:
-            fixture_async = fixture_async_default_TODO
+            fixture_async = fixture_async_default2
         if fixture_sync is None:
-            fixture_sync = fixture_sync_default_TODO
+            fixture_sync = fixture_sync_default2
 
         self.name = name
 
@@ -586,13 +583,15 @@ class JanusLogger_TODO(object):
         '''
         Shutdown logging
         '''
-        self._loop.run_until_complete(
+        asyncio.ensure_future(
             asyncio.gather(
-                self._log_async.shutdown(),
-                self._loop.run_in_executor(
-                    None,
-                    logging.shutdown,
-                )
+                *[
+                    self._log_async.shutdown(),
+                    self._loop.run_in_executor(
+                        None,
+                        logging.shutdown,
+                    )
+                ]
             )
         )
 

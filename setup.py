@@ -64,7 +64,9 @@ URL = 'https://github.com/madkote/janus-logging'
 REQUIRES_INSTALL = [
     'aiologger==0.4.*',
 ]
-REQUIRES_DEV = []
+REQUIRES_DEV = [
+    'uvloop==0.14.*',
+]
 REQUIRES_TESTS = REQUIRES_DEV + [
     'pytest==5.*',
     'tox==3.*',

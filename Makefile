@@ -72,6 +72,8 @@ pypy-deps:
 pypy-build: clean test-all pypy-deps
 	@echo $@
 	python setup.py sdist bdist_wheel
+	# python3 setup.py bdist_egg --exclude-source-files
+	# python setup.py bdist_wheel
 
 pypy-upload-test: pypy-deps
 	@echo $@
