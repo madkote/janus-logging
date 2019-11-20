@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # janus_logging.version
 '''
-:author:    mdakote
+:author:    madkote
 :contact:   madkote(at)bluewin.ch
 :copyright: Copyright 2019, madkote
 
