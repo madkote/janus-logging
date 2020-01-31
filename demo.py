@@ -118,6 +118,16 @@ def main():
         stream=stream,
         extra=dict(bla='blabla')
     )
+    print(logger.logger_sync(logger_name='logger_sync').logger.handlers)
+    logger = janus_logging.JanusLogger(
+        name=name,
+        level=level,
+        loop=loop,
+        fixture=janus_logging.fixture_json,
+        stream=stream,
+        extra=dict(bla='blabla')
+    )
+    print(logger.logger_sync(logger_name='logger_sync').logger.handlers)
     loop.run_until_complete(
         asyncio.gather(
             loop.run_in_executor(

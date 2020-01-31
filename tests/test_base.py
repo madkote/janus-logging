@@ -13,7 +13,12 @@ Package
 
 from __future__ import absolute_import
 
+import asyncio
+import logging
+import sys
 import unittest
+
+import janus_logging
 
 VERSION = (1, 0, 0)
 
@@ -30,8 +35,35 @@ class Test(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_base(self):
-        '''Currently ther is not much to test '''
+    def test_duplicate(self):
+        counter = 4
+        name = 'test_unit_janus_logger'
+        level = logging.DEBUG
+        stream = sys.stdout
+        loop = asyncio.get_event_loop()
+
+        logger = janus_logging.JanusLogger(
+            name=name,
+            level=level,
+            loop=loop,
+            fixture=janus_logging.fixture_json,
+            stream=stream,
+            extra=dict(bla='blabla')
+        )
+        print(logger.logger_sync(logger_name='test_logger_sync').logger.handlers)
+        logger = janus_logging.JanusLogger(
+            name=name,
+            level=level,
+            loop=loop,
+            fixture=janus_logging.fixture_json,
+            stream=stream,
+            extra=dict(bla='blabla')
+        )
+        print(logger.logger_sync(logger_name='test_logger_sync').logger.handlers)
+        logger.shutdown()
+        #
+        #
+        loop.close()
 
 
 if __name__ == "__main__":
