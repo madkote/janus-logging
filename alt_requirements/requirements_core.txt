@@ -1,1 +1,1 @@
-aiologger==0.4.*
+aiologger==0.5.*
