@@ -44,15 +44,19 @@ clean: clean-build clean-pyc clean-pycache
 
 install: clean
 	@echo $@
-	pip install -U -r requirements.txt
+	pip install --no-cache-dir -U -r requirements.txt
 
 demo: clean
 	@echo $@
 	python demo.py
 
+flake: clean
+	@echo $@
+	flake8 --ignore E252 janus_logging tests scripts
+
 test-unit: clean
 	@echo $@
-	python -m pytest -v -x tests/
+	python -m pytest -v -x tests/ --cov=janus_logging
 
 test-tox: clean
 	@echo $@

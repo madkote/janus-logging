@@ -1,4 +1,6 @@
 -r requirements_dev.txt
 
-pytest==5.*
-tox==3.*
+flake8
+pytest
+pytest-cov
+tox
