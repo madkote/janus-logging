@@ -1,5 +1,6 @@
 -r requirements_dev.txt
 
+bandit
 flake8
 pytest
 pytest-cov

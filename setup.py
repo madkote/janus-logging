@@ -68,13 +68,14 @@ REQUIRES_DEV = [
     'uvloop==0.14.*',
 ]
 REQUIRES_TESTS = REQUIRES_DEV + [
+    'bandit',
     'flake8',
     'pytest',
     'pytest-cov',
     'tox',
 ]
 REQUIRES_EXTRA = {
-    'dev':  REQUIRES_DEV,
+    'dev': REQUIRES_DEV,
     'test': REQUIRES_TESTS
 }
 PACKAGES = find_packages(exclude=('scripts', 'tests'))

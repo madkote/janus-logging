@@ -1,6 +1,13 @@
 Changes
 =======
 
+1.3.1 (2020-02-05)
+------------------
+
+- Cleanup
+- add missing parameter for `formatter`
+
+
 1.3.0 (2020-01-31)
 ------------------
 

@@ -23,7 +23,7 @@ import typing
 
 from aiologger import Logger as aioLogger
 # from aiologger.formatters.json import ExtendedJsonFormatter
-from aiologger.handlers.streams import AsyncStreamHandler as _AsyncStreamHandler  # @IgnorePep8
+from aiologger.handlers.streams import AsyncStreamHandler as _AsyncStreamHandler  # noqa E501
 # from aiologger.loggers.json import JsonLogger as aioJsonLogger
 from aiologger.records import LogRecord as aioLogRecord
 
@@ -91,7 +91,7 @@ class AsyncNullHandler(logging.NullHandler):
     async def handle(self, record: aioLogRecord) -> bool:  # @UnusedVariable
         return True
 
-    async def handle_error(self, record: aioLogRecord, exception: Exception) -> None:  # @IgnorePep8
+    async def handle_error(self, record: aioLogRecord, exception: Exception) -> None:  # noqa E501
         pass
 
 
@@ -262,12 +262,8 @@ class SyncJsonFormatter(logging.Formatter):
             (key, value)
             for key, value in record.__dict__.items()
             if (
-                key not in reserved
-                and
-                not (
-                    hasattr(key, 'startswith')
-                    and
-                    key.startswith('_')
+                key not in reserved and not (
+                    hasattr(key, 'startswith') and key.startswith('_')
                 )
             )
         )
@@ -283,7 +279,7 @@ class SyncJsonFormatter(logging.Formatter):
             **self.get_record_extra(record, self.RESERVED_ATTRS)
         }
         details.update(
-            logged_at=datetime.datetime.now(datetime.timezone.utc).astimezone(None).isoformat(),  # @IgnorePep8
+            logged_at=datetime.datetime.now(datetime.timezone.utc).astimezone(None).isoformat(),  # noqa E501
             line_numer=record.lineno,
             function=record.funcName,
             level=record.levelname.upper(),
@@ -319,6 +315,7 @@ def fixture_default(
     if has_logger_by_name(name):
         return logging.getLogger(name=name)
 
+    fmt = kwargs.pop('formatter', None)
     stream = kwargs.pop('stream', sys.stdout)
     propagate = bool(kwargs.pop('propagate', True))
     #
@@ -326,6 +323,8 @@ def fixture_default(
     logger.setLevel(level)
     hdlr = logging.StreamHandler(stream=stream)
     hdlr.setLevel(level)
+    if fmt is not None:
+        hdlr.setFormatter(fmt)
     logger.addHandler(hdlr)
     logger.propagate = propagate
     return logger
@@ -369,12 +368,14 @@ def fixture_json(
 
     extra = kwargs.pop('extra', {})
     serializer = kwargs.pop('serializer', json.dumps)
+    fmt = kwargs.pop('formatter', None)
     stream = kwargs.pop('stream', sys.stdout)
     propagate = bool(kwargs.pop('propagate', True))
     #
     logger = logging.getLogger(name=name)
     logger.setLevel(level)
-    fmt = SyncJsonFormatter(serializer=serializer, **extra)
+    if fmt is None:
+        fmt = SyncJsonFormatter(serializer=serializer, **extra)
     hdlr = logging.StreamHandler(stream=stream)
     hdlr.setLevel(level)
     hdlr.setFormatter(fmt)

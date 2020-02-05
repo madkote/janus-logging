@@ -45,6 +45,8 @@ clean: clean-build clean-pyc clean-pycache
 install: clean
 	@echo $@
 	pip install --no-cache-dir -U -r requirements.txt
+	# flake8 --install-hook git
+	# git config --local --bool flake8.strict true
 
 demo: clean
 	@echo $@
@@ -52,9 +54,13 @@ demo: clean
 
 flake: clean
 	@echo $@
-	flake8 --ignore E252 janus_logging tests scripts
+	flake8 --statistics --ignore E252 janus_logging tests scripts demo.py setup.py
 
-test-unit: clean
+bandit: clean
+	@echo $@
+	bandit -r  janus_logging/ tests/ demo.py setup.py
+
+test-unit: flake bandit
 	@echo $@
 	python -m pytest -v -x tests/ --cov=janus_logging
 

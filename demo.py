@@ -62,7 +62,7 @@ def fixture_async_default(
         level: int,
         loop: asyncio.AbstractEventLoop,
         **kwargs
-        ) -> aiologger.Logger:
+) -> aiologger.Logger:
     ...
     return ...
 
@@ -176,4 +176,4 @@ if __name__ == '__main__':
     # import uvloop
     # uvloop.install()
     main()
-    #main_TODO()
+    # main_TODO()
