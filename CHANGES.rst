@@ -1,6 +1,12 @@
 Changes
 =======
 
+1.3.2 (2020-11-25)
+------------------
+
+- Cleanup, remove dependency from `aiologger`, which has too many issues right now.
+
+
 1.3.1 (2020-02-05)
 ------------------
 

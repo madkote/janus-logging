@@ -4,7 +4,7 @@
 '''
 :author:    madkote
 :contact:   madkote(at)bluewin.ch
-:copyright: Copyright 2019, madkote
+:copyright: Copyright 2020, madkote
 
 janus_logging
 -------------
@@ -17,22 +17,22 @@ import asyncio
 import datetime
 import json
 import logging
-import os
+# import os
 import sys
 import typing
 
-from aiologger import Logger as aioLogger
+# from aiologger import Logger as aioLogger
 # from aiologger.formatters.json import ExtendedJsonFormatter
-from aiologger.handlers.streams import AsyncStreamHandler as _AsyncStreamHandler  # noqa E501
+# from aiologger.handlers.streams import AsyncStreamHandler as _AsyncStreamHandler  # noqa E501
 # from aiologger.loggers.json import JsonLogger as aioJsonLogger
-from aiologger.records import LogRecord as aioLogRecord
+# from aiologger.records import LogRecord as aioLogRecord
 
 from .version import VERSION
 
 __all__ = [
     'JanusLogger',
     'AsyncLoggerAdapter', 'SyncLoggerAdapter',
-    'AsyncNullHandler', 'AsyncStreamHandler',
+    'AsyncNullHandler',
     'fixture_default', 'fixture_json', 'has_logger_by_name',
 ]
 __author__ = 'madkote <madkote(at)bluewin.ch>'
@@ -40,36 +40,36 @@ __version__ = '.'.join(str(x) for x in VERSION)
 __copyright__ = 'Copyright 2019, madkote'
 
 
-class AsyncStreamHandler(_AsyncStreamHandler):
-    def __init__(self, *args, **kwargs):
-        super(AsyncStreamHandler, self).__init__(*args, **kwargs)
-        self._stream = None
-
-    async def _init_writer(self) -> asyncio.StreamWriter:
-        async with self._initialization_lock:
-            if self.writer is not None:
-                return self.writer
-            self._stream = os.fdopen(os.dup(self.stream.fileno()), 'wb')
-            transport, protocol = await self.loop.connect_write_pipe(
-                self.protocol_class, self._stream
-            )
-            self.writer = asyncio.StreamWriter(
-                transport=transport,
-                protocol=protocol,
-                reader=None,
-                loop=self.loop,
-            )
-            return self.writer
-
-    async def close(self):
-        try:
-            if self.writer is None:
-                return
-            await self.flush()
-            self.writer.close()
-        finally:
-            if self._stream is not None:
-                self._stream.close()
+# class AsyncStreamHandler(_AsyncStreamHandler):
+#     def __init__(self, *args, **kwargs):
+#         super(AsyncStreamHandler, self).__init__(*args, **kwargs)
+#         self._stream = None
+#
+#     async def _init_writer(self) -> asyncio.StreamWriter:
+#         async with self._initialization_lock:
+#             if self.writer is not None:
+#                 return self.writer
+#             self._stream = os.fdopen(os.dup(self.stream.fileno()), 'wb')
+#             transport, protocol = await self.loop.connect_write_pipe(
+#                 self.protocol_class, self._stream
+#             )
+#             self.writer = asyncio.StreamWriter(
+#                 transport=transport,
+#                 protocol=protocol,
+#                 reader=None,
+#                 loop=self.loop,
+#             )
+#             return self.writer
+#
+#     async def close(self):
+#         try:
+#             if self.writer is None:
+#                 return
+#             await self.flush()
+#             self.writer.close()
+#         finally:
+#             if self._stream is not None:
+#                 self._stream.close()
 
 
 class AsyncNullHandler(logging.NullHandler):
@@ -82,16 +82,16 @@ class AsyncNullHandler(logging.NullHandler):
     def createLock(self) -> None:
         self.lock = None
 
-    async def emit(self, record: aioLogRecord) -> None:
+    async def emit(self, record) -> None:
         pass
 
     async def flush(self) -> None:
         pass
 
-    async def handle(self, record: aioLogRecord) -> bool:  # @UnusedVariable
+    async def handle(self, record) -> bool:  # @UnusedVariable
         return True
 
-    async def handle_error(self, record: aioLogRecord, exception: Exception) -> None:  # noqa E501
+    async def handle_error(self, record, exception: Exception) -> None:
         pass
 
 
@@ -121,7 +121,7 @@ class AsyncLoggerAdapter(ILoggerAdapter):
     '''
     def __init__(
             self,
-            logger: aioLogger,
+            logger: logging.Logger,
             extra: typing.Dict,
             loop: asyncio.AbstractEventLoop
     ):

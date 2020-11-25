@@ -44,7 +44,7 @@ clean: clean-build clean-pyc clean-pycache
 
 install: clean
 	@echo $@
-	pip install --no-cache-dir -U -r requirements.txt
+	pip install --use-feature=2020-resolver --no-cache-dir -U -r requirements.txt
 	# flake8 --install-hook git
 	# git config --local --bool flake8.strict true
 
@@ -52,13 +52,13 @@ demo: clean
 	@echo $@
 	python demo.py
 
-flake: clean
-	@echo $@
-	flake8 --statistics --ignore E252 janus_logging tests scripts demo.py setup.py
-
 bandit: clean
 	@echo $@
 	bandit -r  janus_logging/ tests/ demo.py setup.py
+
+flake: clean
+	@echo $@
+	flake8 --statistics --ignore E252 janus_logging tests demo.py setup.py
 
 test-unit: flake bandit
 	@echo $@
@@ -74,21 +74,20 @@ test: test-unit
 test-all: test-unit test-tox
 	@echo $@
 
-
-pypy-deps:
+pypi-deps:
 	@echo $@
 	pip install -U twine
 
-pypy-build: clean test-all pypy-deps
+pypi-build: clean test-all pypi-deps
 	@echo $@
 	python setup.py sdist bdist_wheel
 	# python3 setup.py bdist_egg --exclude-source-files
 	# python setup.py bdist_wheel
 
-pypy-upload-test: pypy-deps
+pypi-upload-test: pypi-deps
 	@echo $@
 	python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
-pypy-upload: pypy-deps
+pypi-upload: pypi-deps
 	@echo $@
 	python -m twine upload dist/*

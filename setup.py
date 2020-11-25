@@ -62,7 +62,7 @@ VERSION = get_version(NAME_PACKAGE)
 DESCRIPTION = 'sync and async logging within one logger instance'
 URL = 'https://github.com/madkote/janus-logging'
 REQUIRES_INSTALL = [
-    'aiologger==0.5.*',
+    # 'aiologger==0.5.*',
 ]
 REQUIRES_DEV = [
     'uvloop==0.14.*',

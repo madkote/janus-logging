@@ -4,7 +4,7 @@
 '''
 :author:    madkote
 :contact:   madkote(at)bluewin.ch
-:copyright: Copyright 2019, madkote
+:copyright: Copyright 2020, madkote
 
 janus_logging.version
 ---------------------
@@ -13,7 +13,7 @@ Package version
 
 from __future__ import absolute_import
 
-VERSION = (1, 3, 1)
+VERSION = (1, 3, 2)
 
 __all__ = []
 __author__ = 'madkote <madkote(at)bluewin.ch>'

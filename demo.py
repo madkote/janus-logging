@@ -17,7 +17,6 @@ import asyncio
 import logging
 import sys
 
-import aiologger
 import janus_logging
 
 VERSION = (1, 0, 0)
@@ -62,7 +61,7 @@ def fixture_async_default(
         level: int,
         loop: asyncio.AbstractEventLoop,
         **kwargs
-) -> aiologger.Logger:
+) -> logging.Logger:
     ...
     return ...
 
@@ -78,8 +77,8 @@ def main_TODO():
         name=name,
         level=level,
         loop=loop,
-        fixture_async=janus_logging.fixture_async_json2,
-        fixture_sync=janus_logging.fixture_sync_json2,
+        fixture_async=janus_logging.fixture_async_json2,  # @UndefinedVariable
+        fixture_sync=janus_logging.fixture_sync_json2,    # @UndefinedVariable
         stream=stream,
         extra=dict(bla='blabla')
     )
